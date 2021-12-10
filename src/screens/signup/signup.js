@@ -11,7 +11,6 @@ import {
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faUser, faLock} from '@fortawesome/free-solid-svg-icons';
 import {faEnvelopeOpenText} from '@fortawesome/free-solid-svg-icons';
-
 import * as Animatable from 'react-native-animatable';
 
 function Signup() {

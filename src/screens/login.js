@@ -10,11 +10,13 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
+ 
 function Login({navigation}) {
   const [loginValues, setLoginValues] = useState({
     userNameFocused: false,
     passwordFocused: false,
   });
+
   return (
     <ScrollView style={styles.container}>
       <Image style={styles.img} source={require('../assets/login.png')} />
@@ -81,7 +83,7 @@ function Login({navigation}) {
           />
         </View>
 
-        <TouchableOpacity style={styles.btnLogin}>
+        <TouchableOpacity onPress={()=>SendData('test')} style={styles.btnLogin}>
           <Text style={{color: 'white'}}>Login</Text>
         </TouchableOpacity>
         <View style={styles.dontAccountCont}>
