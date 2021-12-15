@@ -10,8 +10,8 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
- 
-function Login({navigation}) {
+import {connect} from 'react-redux';
+function Login({navigation, addLogin}) {
   const [loginValues, setLoginValues] = useState({
     userNameFocused: false,
     passwordFocused: false,
@@ -83,7 +83,7 @@ function Login({navigation}) {
           />
         </View>
 
-        <TouchableOpacity onPress={()=>SendData('test')} style={styles.btnLogin}>
+        <TouchableOpacity onPress={() => addLogin()} style={styles.btnLogin}>
           <Text style={{color: 'white'}}>Login</Text>
         </TouchableOpacity>
         <View style={styles.dontAccountCont}>
@@ -96,8 +96,10 @@ function Login({navigation}) {
     </ScrollView>
   );
 }
-export default Login;
 
+const mapDispatchToProps = dispatch => ({
+  addLogin: () => dispatch(dispatch({type: 'Add', data: 'Aun'})),
+});
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -146,3 +148,4 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
 });
+export default connect(null, mapDispatchToProps)(Login);
