@@ -1,95 +1,67 @@
 import React, {useState} from 'react';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faUser, faLock} from '@fortawesome/free-solid-svg-icons';
+import I18n from '../i18n';
 import {
   View,
   Image,
   ScrollView,
-  Text,
-  TextInput,
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
+import {Button, InputField, Text} from '../components';
 import {connect} from 'react-redux';
+import {COLORS, FONTS, images} from '../constants';
 function Login({navigation, addLogin}) {
   const [loginValues, setLoginValues] = useState({
     userNameFocused: false,
     passwordFocused: false,
   });
-
   return (
     <ScrollView style={styles.container}>
-      <Image style={styles.img} source={require('../assets/login.png')} />
-
-      <View style={styles.welcomeTxtCont}>
-        <Text style={styles.welcomeTxt}>Welcome Back!</Text>
-        <Text style={{color: 'gray'}}>
-          Login to your existing account of cheap fly
-        </Text>
-      </View>
-
+      <Image style={styles.img} source={images.login} />
+      <Text text={I18n.t('welcome_text')} />
+      <Text style={styles.text} text={I18n.t('login_existing_account')} />
       <View style={styles.subCont}>
-        <View
-          style={[
-            styles.inputCont,
-            {
-              borderColor: loginValues.userNameFocused
-                ? 'lightblue'
-                : 'lightgray',
-            },
-          ]}>
-          <FontAwesomeIcon
-            style={{marginLeft: 10}}
-            color="gray"
-            icon={faUser}
-          />
-          <TextInput
-            onFocus={() =>
-              setLoginValues({...loginValues, userNameFocused: true})
-            }
-            onBlur={() =>
-              setLoginValues({...loginValues, userNameFocused: false})
-            }
-            style={{width: '100%'}}
-            placeholder="User Name"
-          />
-        </View>
+        <InputField
+          iconName={faUser}
+          onChangeText={text => console.log(text)}
+          placeholder={I18n.t('user_name_text')}
+          onFocus={() =>
+            setLoginValues({...loginValues, userNameFocused: true})
+          }
+          onBlur={() =>
+            setLoginValues({...loginValues, userNameFocused: false})
+          }
+          style={{
+            borderColor: loginValues.userNameFocused
+              ? COLORS.primary_color
+              : COLORS.light_gray,
+          }}
+        />
+        <InputField
+          iconName={faLock}
+          onChangeText={text => console.log(text)}
+          placeholder={I18n.t('password_text')}
+          onFocus={() =>
+            setLoginValues({...loginValues, passwordFocused: true})
+          }
+          onBlur={() =>
+            setLoginValues({...loginValues, passwordFocused: false})
+          }
+          secureTextEntry={true}
+          style={{
+            borderColor: loginValues.passwordFocused
+              ? COLORS.primary_color
+              : COLORS.light_gray,
+          }}
+        />
+        <Button style={{alignSelf:'center'}} onPress={() => addLogin()} buttonTitle={I18n.t('login_text')} />
 
-        <View
-          style={[
-            styles.inputCont,
-            {
-              borderColor: loginValues.passwordFocused
-                ? 'lightblue'
-                : 'lightgray',
-              marginTop: 20,
-            },
-          ]}>
-          <FontAwesomeIcon
-            style={{marginLeft: 10}}
-            color="gray"
-            icon={faLock}
-          />
-          <TextInput
-            onFocus={() =>
-              setLoginValues({...loginValues, passwordFocused: true})
-            }
-            onBlur={() =>
-              setLoginValues({...loginValues, passwordFocused: false})
-            }
-            style={{width: '100%'}}
-            placeholder="Password"
-            secureTextEntry={true}
-          />
-        </View>
-
-        <TouchableOpacity onPress={() => addLogin()} style={styles.btnLogin}>
-          <Text style={{color: 'white'}}>Login</Text>
-        </TouchableOpacity>
         <View style={styles.dontAccountCont}>
-          <Text style={{color: 'black'}}>Don't have an account?</Text>
+
+          <Text style={styles.text} text={I18n.t('dont_account_cont')}/>
           <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
-            <Text> Sign up!</Text>
+            <Text style={[styles.text,{...FONTS.Medium14,marginLeft:4}]} text={I18n.t('signup_text')} />
           </TouchableOpacity>
         </View>
       </View>
@@ -106,13 +78,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 15,
   },
+  text: {
+    ...FONTS.Light14,
+  },
   img: {
     height: 250,
     width: '100%',
-  },
-  welcomeTxtCont: {
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   welcomeTxt: {
     fontSize: 20,
