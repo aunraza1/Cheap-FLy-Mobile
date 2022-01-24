@@ -22,7 +22,7 @@ const InputContainer = ({
   const [show,setShow]=useState(false)
   const [secureEntry,setEntry]=useState(secureTextEntry)
   return (
-    <View style={[styles.main_view,style,borderBottom && {borderBottomWidth:1,borderWidth:0}]}>
+    <View style={[styles.main_view,style,borderBottom && {borderBottomWidth:1,borderWidth:0,borderRadius:0}]}>
       {iconName && (
         <IconComponent
           iconName={iconName}
@@ -69,7 +69,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: COLORS.light_gray,
     borderRadius: SIZES.padding * 1.2,
-    marginTop:SIZES.padding2
+    marginTop:SIZES.padding2,
+    
   },
   input: {
     flex: 1,

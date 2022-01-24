@@ -24,8 +24,8 @@ const CustomButton = ({
 export default CustomButton;
 const styles = StyleSheet.create({
   button: {
-    width: '80%',
-    height: SIZES.padding * 2,
+    width: '100%',
+    height: SIZES.padding * 2.5,
     borderRadius: SIZES.padding,
     marginTop: SIZES.padding2,
     backgroundColor: COLORS.primary_color,

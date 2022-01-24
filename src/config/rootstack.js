@@ -1,8 +1,9 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {Image} from 'react-native';
-import Login from '../screens/login';
+
 import Signup from '../screens/signup/signup';
+import Login from '../screens/Login';
 
 const Stack = createNativeStackNavigator();
 function RootStackNavigation() {
