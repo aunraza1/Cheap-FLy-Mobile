@@ -25,7 +25,7 @@ const Requests = () => {
             styles.pending_view,
             {
               backgroundColor: accepted
-                ? 'rgba(85, 208, 79, 0.8)'
+                ? COLORS.green_color
                 : COLORS.white_color,
               borderTopLeftRadius: SIZES.padding,
               borderBottomLeftRadius: SIZES.padding,
@@ -47,7 +47,7 @@ const Requests = () => {
             styles.pending_view,
             {
               backgroundColor: pending
-                ? 'rgba(198, 43, 38, 0.8)'
+                ? COLORS.maroon_color
                 : COLORS.white_color,
               borderTopRightRadius: SIZES.padding,
               borderBottomRightRadius: SIZES.padding,
