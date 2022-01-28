@@ -1,7 +1,8 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import RootStackNavigation from './src/config/rootstack';
-import MainStack from './src/config/mainstack';
+import Tabs from './src/navigation/Tabs';
+import AuthStack from './src/navigation/AuthStack';
+
 import {connect} from 'react-redux';
 function Navigator({loggedUser}) {
   React.useEffect(() => {
@@ -9,7 +10,7 @@ function Navigator({loggedUser}) {
   }, []);
   return (
     <NavigationContainer>
-      {(loggedUser == ''|| loggedUser===undefined )? <RootStackNavigation /> : <MainStack />}
+      {loggedUser == '' || loggedUser === undefined ? <AuthStack /> : <Tabs />}
     </NavigationContainer>
   );
 }

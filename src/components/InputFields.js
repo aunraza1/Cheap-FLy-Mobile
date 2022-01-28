@@ -50,6 +50,7 @@ const InputContainer = ({
         <IconComponent
           iconName={show?faEye:faEyeSlash}
           iconColor={iconColor}
+          size={SIZES.padding2*1.2}
           iconStyle={iconStyle}
         />
         </TouchableOpacity>
