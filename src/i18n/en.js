@@ -16,4 +16,8 @@ export default {
   //Request
   accepted_text: 'Accepted',
   pending_text: 'Pending',
+  booking_date: 'Booking date',
+  vehicle_text: 'Vehicle',
+  vendor_text: 'Vendor',
+  amount_text: 'Amount',
 };

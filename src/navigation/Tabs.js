@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
     height: SIZES.padding * 3.2,
     width: SIZES.padding * 3.2,
     marginBottom: 30,
-    backgroundColor: COLORS.primary_color,
+    backgroundColor: COLORS.maroon_color,
     borderWidth: 7,
     borderColor: COLORS.white_color,
     borderRadius: 35,
