@@ -1,6 +1,6 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import HomeStack from '../screens/Home/HomeStack';
+import HomeStack from './HomeStack';
 import Hotels from '../screens/hotels/hotels';
 import {COLORS, images, SIZES} from '../constants';
 import {StyleSheet, View, Image} from 'react-native';
@@ -13,7 +13,9 @@ import {
   faPaperPlane,
 } from '@fortawesome/free-regular-svg-icons';
 import Requests from '../screens/Requests';
+import Notifications from '../screens/Notifications';
 const Tab = createBottomTabNavigator();
+import I18n from '../i18n';
 
 function Tabs() {
   const IconSize = SIZES.padding * 1.3;
@@ -36,7 +38,7 @@ function Tabs() {
         tabBarLabelStyle: {marginBottom: SIZES.padding},
       }}>
       <Tab.Screen
-        name="Home"
+        name={I18n.t('home_text')}
         component={HomeStack}
         options={{
           tabBarIcon: ({focused}) => (
@@ -58,7 +60,7 @@ function Tabs() {
         }}
       />
       <Tab.Screen
-        name="Requests"
+        name={I18n.t('request_text')}
         component={Requests}
         options={{
           tabBarIcon: ({focused}) => (
@@ -80,6 +82,8 @@ function Tabs() {
         }}
       />
       <Tab.Screen
+        name={I18n.t('favourite_text')}
+        component={Hotels}
         options={{
           tabBarIcon: ({focused}) => (
             <View style={styles.middle_icon}>
@@ -99,12 +103,10 @@ function Tabs() {
             </View>
           ),
         }}
-        name="Favourites"
-        component={Hotels}
       />
       <Tab.Screen
-        name="Notifications"
-        component={Hotels}
+        name={I18n.t('notification_text')}
+        component={Notifications}
         options={{
           tabBarIcon: ({focused}) => (
             <>
@@ -125,7 +127,7 @@ function Tabs() {
         }}
       />
       <Tab.Screen
-        name="Profile"
+        name={I18n.t('profile_text')}
         component={Hotels}
         options={{
           tabBarIcon: ({focused}) => (

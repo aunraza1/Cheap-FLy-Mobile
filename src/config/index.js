@@ -1,53 +1,53 @@
-import {faCarAlt} from '@fortawesome/free-solid-svg-icons';
+import {
+  faCarAlt,
+  faPlane,
+  faHotel,
+  faCar,
+  faPaperPlane,
+  faHeart,
+  faHiking,
+  faEllipsisH,
+  faMoneyBill,
+} from '@fortawesome/free-solid-svg-icons';
 export const dashboardData = [
   {
     id: 1,
-    icon: faCarAlt,
-    text: 'Cars',
+    icon: faPlane,
+    text: 'Flights',
   },
   {
     id: 2,
-    icon: faCarAlt,
-    text: 'Cars',
+    icon: faHotel,
+    text: 'Hotels',
   },
   {
     id: 3,
-    icon: faCarAlt,
+    icon: faCar,
     text: 'Cars',
   },
   {
     id: 4,
-    icon: faCarAlt,
-    text: 'Cars',
+    icon: faPaperPlane,
+    text: 'Requests',
   },
   {
     id: 5,
-    icon: faCarAlt,
-    text: 'Cars',
+    icon: faHeart,
+    text: 'Saved',
   },
   {
     id: 6,
-    icon: faCarAlt,
-    text: 'Cars',
+    icon: faHiking,
+    text: 'Tours',
   },
   {
     id: 7,
-    icon: faCarAlt,
-    text: 'Cars',
+    icon: faMoneyBill,
+    text: 'Discounts',
   },
   {
     id: 8,
-    icon: faCarAlt,
-    text: 'Cars',
-  },
-  {
-    id: 9,
-    icon: faCarAlt,
-    text: 'Cars',
-  },
-  {
-    id: 10,
-    icon: faCarAlt,
-    text: 'Cars',
+    icon: faEllipsisH,
+    text: 'More',
   },
 ];

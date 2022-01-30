@@ -3,7 +3,7 @@ const COLORS = {
   black_color: '#000000',
   white_color: '#fff',
   gray_color: '#808080',
-  light_gray: '#D3D3D3',
+  light_gray: '#E8E8E8',
   green_color: 'rgba(85, 208, 79, 0.8)',
   maroon_color: 'rgba(198, 43, 38, 0.8)',
 };

@@ -20,4 +20,11 @@ export default {
   vehicle_text: 'Vehicle',
   vendor_text: 'Vendor',
   amount_text: 'Amount',
+
+  //Tabs
+  home_text: 'Home',
+  request_text: 'Requests',
+  favourite_text: 'Favourites',
+  notification_text: 'Notifications',
+  profile_text: 'Profile',
 };

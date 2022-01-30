@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import AnimatedLoader from 'react-native-animated-loader';
 import {animations, SIZES} from '../constants';
-import {Text} from '../components';
+import {Text} from './index.js';
 
 const Loader = ({isVisible, loadingText}) => {
   return (
