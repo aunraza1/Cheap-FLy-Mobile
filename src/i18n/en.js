@@ -27,4 +27,7 @@ export default {
   favourite_text: 'Favourites',
   notification_text: 'Notifications',
   profile_text: 'Profile',
+
+  //Home
+  looking_for_text: 'What are you Looking For?',
 };
