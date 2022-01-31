@@ -30,4 +30,9 @@ export default {
 
   //Home
   looking_for_text: 'What are you Looking For?',
+
+  //AlertModal
+  ok_text: 'Ok',
+  error_text: 'Error',
+  success_text: 'Success',
 };

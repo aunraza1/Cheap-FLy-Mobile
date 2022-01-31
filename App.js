@@ -1,10 +1,9 @@
 import React, {useEffect} from 'react';
 import RNBootSplash from 'react-native-bootsplash';
-
 import {Provider} from 'react-redux';
-import store from './src/store/index';
-import {connect} from 'react-redux';
+import store from './src/store';
 import Navigator from './Navigator';
+import {AlertModal} from './src/components';
 const App = () => {
   useEffect(() => {
     RNBootSplash.hide();
@@ -12,12 +11,10 @@ const App = () => {
   return (
     <Provider store={store}>
       <Navigator />
+      <AlertModal />
     </Provider>
   );
 };
 
-const mapStateToProps = state => ({
-  loggedUser: state.loggedUser,
-});
-connect(mapStateToProps, null)(Navigator);
+
 export default App;

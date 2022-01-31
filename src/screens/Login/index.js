@@ -9,9 +9,8 @@ import {
   StyleSheet,
 } from 'react-native';
 import {Button, InputField, Text} from '../../components';
-import {connect} from 'react-redux';
 import {COLORS, FONTS, images} from '../../constants';
-function Login({navigation, addLogin}) {
+function Login({navigation}) {
   const [loginValues, setLoginValues] = useState({
     userNameFocused: false,
     passwordFocused: false,
@@ -57,7 +56,7 @@ function Login({navigation, addLogin}) {
         />
         <Button
           style={{alignSelf: 'center'}}
-          onPress={() => addLogin()}
+          onPress={() => navigation.navigate('Tabs')}
           buttonTitle={I18n.t('login_text')}
         />
         <View style={styles.dontAccountCont}>
@@ -74,9 +73,6 @@ function Login({navigation, addLogin}) {
   );
 }
 
-const mapDispatchToProps = dispatch => ({
-  addLogin: () => dispatch(dispatch({type: 'Add', data: 'Aun'})),
-});
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -124,4 +120,4 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
 });
-export default connect(null, mapDispatchToProps)(Login);
+export default Login;

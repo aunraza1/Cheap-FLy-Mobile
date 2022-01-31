@@ -113,7 +113,7 @@ function Tabs() {
               {focused ? (
                 <IconComponent
                   iconColor={COLORS.white_color}
-                  size={SIZES.padding * 1.3}
+                  size={IconSize}
                   iconName={faBell}
                 />
               ) : (
@@ -135,7 +135,7 @@ function Tabs() {
               {focused ? (
                 <IconComponent
                   iconColor={COLORS.white_color}
-                  size={SIZES.padding * 1.3}
+                  size={IconSize}
                   iconName={faUser}
                 />
               ) : (

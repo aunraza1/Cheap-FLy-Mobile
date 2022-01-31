@@ -2,19 +2,17 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import Tabs from './src/navigation/Tabs';
 import AuthStack from './src/navigation/AuthStack';
-
-import {connect} from 'react-redux';
-function Navigator({loggedUser}) {
-  React.useEffect(() => {
-    console.log(loggedUser);
-  }, []);
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+function Navigator() {
+  const Stack = createNativeStackNavigator();
   return (
     <NavigationContainer>
-      {loggedUser == '' || loggedUser === undefined ? <AuthStack /> : <Tabs />}
+      <Stack.Navigator screenOptions={{headerShown: false}}>
+        <Stack.Screen name="AuthStack" component={AuthStack} />
+        <Stack.Screen name="Tabs" component={Tabs} />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }
-const mapStateToProps = state => ({
-  loggedUser: state.loggedUser,
-});
-export default connect(mapStateToProps, null)(Navigator);
+
+export default Navigator;
