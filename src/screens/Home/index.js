@@ -1,12 +1,11 @@
 import React from 'react';
-import {View, StyleSheet, FlatList} from 'react-native';
-import {connect} from 'react-redux';
+import {View, StyleSheet, FlatList, Image} from 'react-native';
 import {COLORS, FONTS, SIZES} from '../../constants';
 import {dashboardData} from '../../config';
 import {SingleRouteView} from './components';
 import {Text} from '../../components';
 import I18n from '../../i18n';
-function Home() {
+const Home = () => {
   return (
     <View style={styles.main_view}>
       <View style={styles.menu_view}>
@@ -29,11 +28,7 @@ function Home() {
       </View>
     </View>
   );
-}
-
-const mapStateToProp = state => ({
-  loggedUser: state.loggedUser,
-});
+};
 
 const styles = StyleSheet.create({
   main_view: {
@@ -61,4 +56,4 @@ const styles = StyleSheet.create({
     textAlign: 'left',
   },
 });
-export default connect(mapStateToProp, null)(Home);
+export default Home;

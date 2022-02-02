@@ -7,6 +7,7 @@ export default {
   login_text: 'Login',
   dont_account_cont: "Don't have an account?",
   signup_text: 'Signup',
+  email_pass_cant_text: "Email & Password can't be empty",
 
   //Signup
   full_name_text: 'Full Name',

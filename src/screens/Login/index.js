@@ -8,13 +8,48 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
-import {Button, InputField, Text} from '../../components';
-import {COLORS, FONTS, images} from '../../constants';
+import {Button, InputField, Loader, Text} from '../../components';
+import {COLORS, FONTS, images, SIZES} from '../../constants';
+import {useDispatch, useSelector} from 'react-redux';
+import {ModalHandler} from '../../store/actions/modal-actions';
+import {LoginHandler} from '../../store/actions/autth-actions';
+import {CommonActions} from '@react-navigation/native';
 function Login({navigation}) {
+  const dispatch = useDispatch();
+
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
   const [loginValues, setLoginValues] = useState({
     userNameFocused: false,
     passwordFocused: false,
   });
+  const {loading} = useSelector(state => state.AuthReducer);
+
+  const goToHome = () => {
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [
+          {
+            name: 'Tabs',
+          },
+        ],
+      }),
+    );
+  };
+  const authenticateUser = () => {
+    if (email && password) {
+      dispatch(LoginHandler(email, password, goToHome));
+    } else {
+      dispatch(
+        ModalHandler({
+          show: true,
+          message: I18n.t('email_pass_cant_text'),
+        }),
+      );
+    }
+  };
+
   return (
     <ScrollView style={styles.container}>
       <Image style={styles.img} source={images.login} />
@@ -22,8 +57,8 @@ function Login({navigation}) {
       <Text style={styles.text} text={I18n.t('login_existing_account')} />
       <View style={styles.subCont}>
         <InputField
+          onChangeText={text => setEmail(text)}
           iconName={faUser}
-          onChangeText={text => console.log(text)}
           placeholder={I18n.t('user_name_text')}
           onFocus={() =>
             setLoginValues({...loginValues, userNameFocused: true})
@@ -38,8 +73,8 @@ function Login({navigation}) {
           }}
         />
         <InputField
+          onChangeText={text => setPassword(text)}
           iconName={faLock}
-          onChangeText={text => console.log(text)}
           placeholder={I18n.t('password_text')}
           onFocus={() =>
             setLoginValues({...loginValues, passwordFocused: true})
@@ -54,12 +89,16 @@ function Login({navigation}) {
               : COLORS.light_gray,
           }}
         />
-        <Button
-          style={{alignSelf: 'center'}}
-          onPress={() => navigation.navigate('Tabs')}
-          buttonTitle={I18n.t('login_text')}
-        />
-        <View style={styles.dontAccountCont}>
+        {loading ? (
+          <Loader />
+        ) : (
+          <Button
+            style={{alignSelf: 'center'}}
+            onPress={() => authenticateUser()}
+            buttonTitle={I18n.t('login_text')}
+          />
+        )}
+        <View style={styles.dont_account_cont}>
           <Text style={styles.text} text={I18n.t('dont_account_cont')} />
           <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
             <Text
@@ -77,7 +116,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    padding: 15,
+    padding: SIZES.padding2 * 1.2,
   },
   text: {
     ...FONTS.Light14,
@@ -86,38 +125,13 @@ const styles = StyleSheet.create({
     height: 250,
     width: '100%',
   },
-  welcomeTxt: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: 'black',
-  },
   subCont: {
-    marginTop: 20,
-    justifyContent: 'center',
+    marginTop: SIZES.padding,
   },
-  inputCont: {
+  dont_account_cont: {
+    justifyContent: 'center',
     flexDirection: 'row',
-    alignItems: 'center',
-    padding: 5,
-    borderRadius: 40,
-    borderWidth: 1,
-    backgroundColor: 'white',
-  },
-  btnLogin: {
-    alignSelf: 'center',
-    marginTop: 30,
-    height: 50,
-    backgroundColor: 'rgba(50,50,122,1)',
-    width: '85%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 25,
-  },
-  dontAccountCont: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
-    marginTop: 10,
+    marginTop: SIZES.padding2,
   },
 });
 export default Login;

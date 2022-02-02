@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "644402600328",
+    "firebase_url": "https://cheap-fly-16760-default-rtdb.firebaseio.com",
+    "project_id": "cheap-fly-16760",
+    "storage_bucket": "cheap-fly-16760.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:644402600328:android:355720846546b26665823d",
+        "android_client_info": {
+          "package_name": "com.cheapflymobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "644402600328-r6c7srng6j86f9v0t3mv38livvmltc00.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIC0Lj0UNbHhFSoUhyKRHFhZ0Jyzmb42s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "644402600328-r6c7srng6j86f9v0t3mv38livvmltc00.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
