@@ -49,3 +49,14 @@ export const signin = async (email, password, data) => {
       data(obj);
     });
 };
+export const getAllHotels = async sendData => {
+  let hotelData = [];
+  database()
+    .ref('/Hotels')
+    .once('value', snapshot => {
+      snapshot.forEach(child => {
+        hotelData.push(child.val());
+      });
+      sendData(hotelData);
+    });
+};

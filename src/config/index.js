@@ -19,6 +19,7 @@ export const dashboardData = [
     id: 2,
     icon: faHotel,
     text: 'Hotels',
+    route: 'Hotels',
   },
   {
     id: 3,

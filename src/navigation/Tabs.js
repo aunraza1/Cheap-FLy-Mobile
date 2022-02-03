@@ -1,7 +1,7 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomeStack from './HomeStack';
-import Hotels from '../screens/hotels/hotels';
+import Hotels from '../screens/Hotels';
 import {COLORS, images, SIZES} from '../constants';
 import {StyleSheet, View, Image} from 'react-native';
 import {IconComponent} from '../components';

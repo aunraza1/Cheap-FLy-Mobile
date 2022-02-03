@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {View, StyleSheet} from 'react-native';
-import {AnimatedLoader} from '../../components';
 import {SIZES} from '../../constants';
 import I18n from '../../i18n';
 import {SingleRequestView, Tabs} from './components';
@@ -27,7 +26,6 @@ const Requests = () => {
         tabArray={tabArray}
       />
       <SingleRequestView />
-      <AnimatedLoader />
     </View>
   );
 };

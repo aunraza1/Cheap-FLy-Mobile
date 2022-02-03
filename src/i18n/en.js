@@ -36,4 +36,7 @@ export default {
   ok_text: 'Ok',
   error_text: 'Error',
   success_text: 'Success',
+
+  //Hotels
+  loading_hotels: 'Loading Hotels',
 };

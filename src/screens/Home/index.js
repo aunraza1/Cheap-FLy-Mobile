@@ -1,11 +1,14 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, StyleSheet, FlatList, Image} from 'react-native';
 import {COLORS, FONTS, SIZES} from '../../constants';
 import {dashboardData} from '../../config';
 import {SingleRouteView} from './components';
 import {Text} from '../../components';
 import I18n from '../../i18n';
-const Home = () => {
+const Home = ({navigation}) => {
+  // useEffect(() => {
+  //   getAllHotels(data => console.log('HOTTTTTTTTTTTTTTTTELS', data));
+  // }, []);
   return (
     <View style={styles.main_view}>
       <View style={styles.menu_view}>
@@ -20,7 +23,11 @@ const Home = () => {
           keyExtractor={item => item?.id}
           showsVerticalScrollIndicator={false}
           renderItem={({item, index}) => (
-            <SingleRouteView icon={item?.icon} text={item?.text} />
+            <SingleRouteView
+              onPress={() => navigation.navigate(item?.route)}
+              icon={item?.icon}
+              text={item?.text}
+            />
           )}
           data={dashboardData}
           numColumns={4}

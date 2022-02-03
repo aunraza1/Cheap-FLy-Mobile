@@ -3,9 +3,9 @@ import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {IconComponent, Text} from '../../../components';
 import {COLORS, FONTS, SIZES} from '../../../constants';
 
-const SingleRouteView = ({icon, text}) => {
+const SingleRouteView = ({icon, text, onPress}) => {
   return (
-    <TouchableOpacity style={styles.main_view}>
+    <TouchableOpacity onPress={onPress} style={styles.main_view}>
       <View style={styles.icon_view}>
         <IconComponent iconColor={COLORS.maroon_color} iconName={icon} />
       </View>

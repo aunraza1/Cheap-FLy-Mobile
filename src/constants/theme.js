@@ -8,6 +8,7 @@ const COLORS = {
   maroon_color: 'rgba(198, 43, 38, 0.8)',
   overlay_black: 'rgba(0,0,0,0.6)',
   dark_green: '#006400',
+  light_background: 'FAF9F6',
 };
 const SIZES = {
   base: 8,

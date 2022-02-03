@@ -1,17 +1,17 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import AnimatedLoader from 'react-native-animated-loader';
-import {animations, SIZES} from '../constants';
+import {animations, COLORS, FONTS, SIZES} from '../constants';
 import {Text} from './index.js';
 
 const Loader = ({isVisible, loadingText}) => {
   return (
     <AnimatedLoader
-      visible={isVisible}
+      visible={isVisible ? isVisible : true}
       source={animations.Loader}
       animationStyle={styles.lottie}
       speed={1}>
-      <Text text={loadingText} />
+      <Text style={styles.text} text={loadingText} />
     </AnimatedLoader>
   );
 };
@@ -20,5 +20,9 @@ const styles = StyleSheet.create({
   lottie: {
     width: SIZES.padding * 4,
     height: SIZES.padding * 4,
+  },
+  text: {
+    ...FONTS.Light15,
+    color: COLORS.white_color,
   },
 });
