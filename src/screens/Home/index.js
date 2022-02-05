@@ -5,10 +5,11 @@ import {dashboardData} from '../../config';
 import {SingleRouteView} from './components';
 import {Text} from '../../components';
 import I18n from '../../i18n';
+import {addToFavourite} from '../../functions';
 const Home = ({navigation}) => {
-  // useEffect(() => {
-  //   getAllHotels(data => console.log('HOTTTTTTTTTTTTTTTTELS', data));
-  // }, []);
+  useEffect(() => {
+    // addToFavourite('G4ItK9z31OeqIrP1UIrnBDaCY1i2', 'Mhml9MeuYqbfRcwpqor');
+  }, []);
   return (
     <View style={styles.main_view}>
       <View style={styles.menu_view}>

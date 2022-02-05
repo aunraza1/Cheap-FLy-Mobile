@@ -37,6 +37,14 @@ export default {
   error_text: 'Error',
   success_text: 'Success',
 
-  //Hotels
+  //HotelStack
   loading_hotels: 'Loading Hotels',
+  single_text: 'Single Room',
+  double_text: 'Double Room',
+  king_text: 'King Room',
+  queen_text: 'Queen Price',
+  pkr_night_text: 'PKR/per night',
+  location_text: 'Location',
+  pkr_text: 'PKR',
+  book_now_text: 'Book Now',
 };

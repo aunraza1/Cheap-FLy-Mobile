@@ -1,18 +1,31 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, FlatList} from 'react-native';
 import {AnimatedLoader, NoDataFound} from '../../components';
 import {COLORS, SIZES} from '../../constants';
 import {SingleHotelView} from './components/index';
 import {useDispatch, useSelector} from 'react-redux';
 import {GetHotels} from '../../store/actions/hotel-actions';
+import {AddToFavourites} from '../../store/actions/favourite-actions';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import I18n from '../../i18n';
-function Hotels() {
+function Hotels({navigation}) {
   const dispatch = useDispatch();
+
+  const [user, setUser] = useState(null);
+  const getUser = async () => {
+    let e = await AsyncStorage.getItem('user');
+    if (e !== null) {
+      setUser(JSON.parse(e));
+    }
+  };
+
   useEffect(() => {
+    getUser();
     dispatch(GetHotels());
   }, []);
   const {loading} = useSelector(state => state.HotelReducer);
   const {hotels} = useSelector(state => state.HotelReducer);
+  const {fav_loading} = useSelector(state => state.FavouriteReducer);
   return (
     <View style={styles.main_view}>
       {loading ? (
@@ -29,6 +42,11 @@ function Hotels() {
               price={item?.singlePrice}
               ratings={item?.hotelRatings}
               image={item?.url}
+              onPress={() => navigation.navigate('HotelDetail', item)}
+              loading={fav_loading}
+              onPressBookMark={() => {
+                dispatch(AddToFavourites(user?.user_id, item?.key));
+              }}
             />
           )}
         />

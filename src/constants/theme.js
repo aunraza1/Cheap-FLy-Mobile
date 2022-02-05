@@ -9,6 +9,8 @@ const COLORS = {
   overlay_black: 'rgba(0,0,0,0.6)',
   dark_green: '#006400',
   light_background: 'FAF9F6',
+  pink_color: '#ffb6c1',
+  dark_orange: '#ff8c00',
 };
 const SIZES = {
   base: 8,

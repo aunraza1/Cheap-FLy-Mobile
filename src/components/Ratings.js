@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import {Text} from '../../../components';
-import {FONTS} from '../../../constants';
+import {Text} from './index';
+import {FONTS} from '../constants';
 const Ratings = ({ratings}) => {
   let data = [];
   for (let i = 0; i < ratings; i++) {

@@ -1,5 +1,6 @@
 import database, {firebase} from '@react-native-firebase/database';
 import auth from '@react-native-firebase/auth';
+
 export const signin = async (email, password, data) => {
   auth()
     .signInWithEmailAndPassword(email, password)
@@ -58,5 +59,49 @@ export const getAllHotels = async sendData => {
         hotelData.push(child.val());
       });
       sendData(hotelData);
+    });
+};
+
+export const addToFavourite = async (
+  user_id,
+  favourite_item_id,
+  sendResponce,
+) => {
+  let favourites = [];
+  database()
+    .ref('/Favourite')
+    .orderByChild('favItemId')
+    .equalTo(favourite_item_id)
+    .once('value', snapshot => {
+      snapshot.forEach(child => {
+        if (child.val().userId === user_id) {
+          favourites.push(child.val());
+        }
+      });
+      if (favourites.length > 0) {
+        sendResponce({
+          message: 'Item Already Favourite',
+        });
+      } else {
+        let key = firebase.database().ref('/Favourite').push().key;
+        let data = {
+          userId: user_id,
+          favItemId: favourite_item_id,
+        };
+        database()
+          .ref('/Favourite/' + key)
+          .set(data, err => {
+            if (err) {
+              sendResponce({
+                message: 'Something went wrong!',
+              });
+            } else {
+              sendResponce({
+                type: 'Suceess',
+                message: 'Item Added to Favourite',
+              });
+            }
+          });
+      }
     });
 };
