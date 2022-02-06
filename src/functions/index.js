@@ -83,25 +83,31 @@ export const addToFavourite = async (
           message: 'Item Already Favourite',
         });
       } else {
-        let key = firebase.database().ref('/Favourite').push().key;
-        let data = {
-          userId: user_id,
-          favItemId: favourite_item_id,
-        };
-        database()
-          .ref('/Favourite/' + key)
-          .set(data, err => {
-            if (err) {
-              sendResponce({
-                message: 'Something went wrong!',
-              });
-            } else {
-              sendResponce({
-                type: 'Suceess',
-                message: 'Item Added to Favourite',
-              });
-            }
+        if (user_id && favourite_item_id) {
+          let key = firebase.database().ref('/Favourite').push().key;
+          let data = {
+            userId: user_id,
+            favItemId: favourite_item_id,
+          };
+          database()
+            .ref('/Favourite/' + key)
+            .set(data, err => {
+              if (err) {
+                sendResponce({
+                  message: 'Something went wrong!',
+                });
+              } else {
+                sendResponce({
+                  type: 'Suceess',
+                  message: 'Item Added to Favourite',
+                });
+              }
+            });
+        } else {
+          sendResponce({
+            message: 'Missing Params (user_id: , fav_id:)',
           });
+        }
       }
     });
 };

@@ -6,7 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import {IconComponent, Ratings, Text, Button} from '../../components';
+import {IconComponent, Ratings, Text, Button, Loader} from '../../components';
 import {COLORS, FONTS, SIZES} from '../../constants';
 import {
   faBookmark,
@@ -14,8 +14,13 @@ import {
   faBed,
 } from '@fortawesome/free-solid-svg-icons';
 import I18n from '../../i18n';
-const HotelDetail = ({route}) => {
-  const hotel = route?.params;
+import {useDispatch, useSelector} from 'react-redux';
+import {AddToFavourites} from '../../store/actions/favourite-actions';
+
+const HotelDetail = ({route, navigation}) => {
+  const dispatch = useDispatch();
+  const {fav_loading} = useSelector(state => state.FavouriteReducer);
+  const {hotel, user} = route?.params;
   let prices = [];
   hotel?.singlePrice &&
     prices.push({
@@ -50,12 +55,19 @@ const HotelDetail = ({route}) => {
           <View style={styles.card_view}>
             <View style={styles.card_detail}>
               <Text text={hotel?.hotelName} />
-              <TouchableOpacity>
-                <IconComponent
-                  iconColor={COLORS.maroon_color}
-                  iconName={faBookmark}
-                />
-              </TouchableOpacity>
+              {fav_loading ? (
+                <Loader color={COLORS.maroon_color} size={'small'} />
+              ) : (
+                <TouchableOpacity
+                  onPress={() =>
+                    dispatch(AddToFavourites(user?.user_id, hotel?.key))
+                  }>
+                  <IconComponent
+                    iconColor={COLORS.maroon_color}
+                    iconName={faBookmark}
+                  />
+                </TouchableOpacity>
+              )}
             </View>
             <Ratings ratings={hotel?.hotelRatings} />
             <Text
@@ -98,6 +110,7 @@ const HotelDetail = ({route}) => {
           })}
         </View>
         <Button
+          onPress={() => navigation.navigate('Booking', hotel)}
           buttonTitle={I18n.t('book_now_text')}
           style={{
             backgroundColor: COLORS.maroon_color,
@@ -146,7 +159,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white_color,
   },
   text: {
-    ...FONTS.Light16,
+    ...FONTS.Light14,
     marginTop: SIZES.padding2 * 0.4,
     textAlign: 'left',
   },

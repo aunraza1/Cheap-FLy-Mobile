@@ -42,7 +42,9 @@ function Hotels({navigation}) {
               price={item?.singlePrice}
               ratings={item?.hotelRatings}
               image={item?.url}
-              onPress={() => navigation.navigate('HotelDetail', item)}
+              onPress={() =>
+                navigation.navigate('HotelDetail', {hotel: item, user: user})
+              }
               loading={fav_loading}
               onPressBookMark={() => {
                 dispatch(AddToFavourites(user?.user_id, item?.key));
