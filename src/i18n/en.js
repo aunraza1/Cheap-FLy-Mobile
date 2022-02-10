@@ -62,4 +62,7 @@ export default {
   queen_text: 'Queen Price',
   look_text: "Let's Book",
   select_text: 'Select',
+  date_text: 'Date',
+  select_date: 'Select Date',
+  select_room_and_days_alert: 'Select Room and Days to Book',
 };

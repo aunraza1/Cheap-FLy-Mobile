@@ -111,3 +111,21 @@ export const addToFavourite = async (
       }
     });
 };
+
+export const addBooking = (obj, sendResponce) => {
+  let key = database().ref('/Bookings').push().key;
+  firebase
+    .database()
+    .ref('/Bookings/' + key)
+    .set({...obj, key: key}, err => {
+      if (err) {
+        sendResponce({
+          message: 'Something Went Wrong!',
+        });
+      } else {
+        sendResponce({
+          message: 'Booking Added ,wait for booking confirmation',
+        });
+      }
+    });
+};
