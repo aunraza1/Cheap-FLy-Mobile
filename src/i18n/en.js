@@ -65,4 +65,11 @@ export default {
   date_text: 'Date',
   select_date: 'Select Date',
   select_room_and_days_alert: 'Select Room and Days to Book',
+
+  //Cars
+  per_hour_text: ' Per Hour',
+  segment_text: 'Segment',
+  owned_by_text: 'Owned by',
+  registration_no_text: 'Registration No',
+  loading_cars: 'Loading Cars',
 };
