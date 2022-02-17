@@ -137,4 +137,4 @@ const FONTS = {
     fontSize: SIZES.h12,
   },
 };
-export {COLORS, FONTS, SIZES};
+export { COLORS, FONTS, SIZES };

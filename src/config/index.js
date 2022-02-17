@@ -14,6 +14,7 @@ export const dashboardData = [
     id: 1,
     icon: faPlane,
     text: 'Flights',
+    route: 'Flights',
   },
   {
     id: 2,
@@ -53,3 +54,18 @@ export const dashboardData = [
     text: 'More',
   },
 ];
+
+export const travelClass = [{
+  id: 'ECONOMY', title: 'ECONOMY'
+},
+{
+  id: 'PREMIUM_ECONOMY', title: 'PREMIUM_ECONOMY'
+},
+{
+  id: 'BUSINESS', title: 'BUSINESS'
+},
+{
+  id: 'FIRST', title: 'FIRST'
+}]
+
+
