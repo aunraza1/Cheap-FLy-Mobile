@@ -1,7 +1,7 @@
 import React from 'react';
-import {TouchableOpacity, StyleSheet} from 'react-native';
-import {COLORS, SIZES} from '../constants';
-import {Text} from './index';
+import { TouchableOpacity, StyleSheet } from 'react-native';
+import { COLORS, SIZES } from '../constants';
+import { Text } from './index';
 
 const CustomButton = ({
   buttonTitle,

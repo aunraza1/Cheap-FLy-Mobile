@@ -1,8 +1,8 @@
-import React,{useState} from 'react';
-import {TextInput, StyleSheet, View, TouchableOpacity} from 'react-native';
-import {COLORS, FONTS, SIZES} from '../constants';
-import {IconComponent} from './index';
-import {faEye,faEyeSlash} from '@fortawesome/free-solid-svg-icons';
+import React, { useState } from 'react';
+import { TextInput, StyleSheet, View, TouchableOpacity } from 'react-native';
+import { COLORS, FONTS, SIZES } from '../constants';
+import { IconComponent } from './index';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 const InputContainer = ({
   onChangeText,
   value,
@@ -16,13 +16,18 @@ const InputContainer = ({
   iconStyle,
   borderBottom,
   secureTextEntry,
-  placeholderTextColor
-}) =>
-{
-  const [show,setShow]=useState(false)
-  const [secureEntry,setEntry]=useState(secureTextEntry)
+  placeholderTextColor,
+  editable,
+}) => {
+  const [show, setShow] = useState(false);
+  const [secureEntry, setEntry] = useState(secureTextEntry);
   return (
-    <View style={[styles.main_view,style,borderBottom && {borderBottomWidth:1,borderWidth:0,borderRadius:0}]}>
+    <View
+      style={[
+        styles.main_view,
+        style,
+        borderBottom && { borderBottomWidth: 1, borderWidth: 0, borderRadius: 0 },
+      ]}>
       {iconName && (
         <IconComponent
           iconName={iconName}
@@ -31,10 +36,13 @@ const InputContainer = ({
         />
       )}
       <TextInput
+        editable={editable}
         placeholder={placeholder}
-        placeholderTextColor={placeholderTextColor?placeholderTextColor:COLORS.black_color}
+        placeholderTextColor={
+          placeholderTextColor ? placeholderTextColor : COLORS.black_color
+        }
         value={value}
-        style={[styles.input, iconName && {marginLeft: SIZES.padding2}]}
+        style={[styles.input, iconName && { marginLeft: SIZES.padding2 }]}
         keyboardType={keyboardType}
         onFocus={onFocus}
         onBlur={onBlur}
@@ -42,19 +50,18 @@ const InputContainer = ({
         onChangeText={onChangeText}
       />
       {secureTextEntry && (
-        <TouchableOpacity onPress={()=>{
-          setShow(!show)
-          setEntry(!secureEntry)
-
-        }} >
-        <IconComponent
-          iconName={show?faEye:faEyeSlash}
-          iconColor={iconColor}
-          size={SIZES.padding2*1.2}
-          iconStyle={iconStyle}
-        />
+        <TouchableOpacity
+          onPress={() => {
+            setShow(!show);
+            setEntry(!secureEntry);
+          }}>
+          <IconComponent
+            iconName={show ? faEye : faEyeSlash}
+            iconColor={iconColor}
+            size={SIZES.padding2 * 1.2}
+            iconStyle={iconStyle}
+          />
         </TouchableOpacity>
-
       )}
     </View>
   );
@@ -70,13 +77,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: COLORS.light_gray,
     borderRadius: SIZES.padding * 1.2,
-    marginTop:SIZES.padding2,
-    
+    marginTop: SIZES.padding2,
   },
   input: {
     flex: 1,
     ...FONTS.Light14,
-    color:COLORS.black_color
-
+    color: COLORS.black_color,
   },
 });
