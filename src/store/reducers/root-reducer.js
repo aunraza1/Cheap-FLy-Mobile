@@ -4,12 +4,14 @@ import AuthReducer from './auth-reducer';
 import HotelReducer from './hotels-reducer';
 import FavouriteReducer from './favourite-reducer';
 import BookingReducer from './booking-reducer';
+import CarReducer from './cars-reducer';
 const appReducer = combineReducers({
   ModalReducer: ModalReducer,
   AuthReducer: AuthReducer,
   HotelReducer: HotelReducer,
   FavouriteReducer: FavouriteReducer,
   BookingReducer: BookingReducer,
+  CarReducer: CarReducer,
 });
 const rootReducer = (state, action) => {
   return appReducer(state, action);

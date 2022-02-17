@@ -26,6 +26,7 @@ export const dashboardData = [
     id: 3,
     icon: faCar,
     text: 'Cars',
+    route: 'Cars',
   },
   {
     id: 4,

@@ -2,9 +2,9 @@ import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, FlatList} from 'react-native';
 import {AnimatedLoader, NoDataFound} from '../../components';
 import {COLORS, SIZES} from '../../constants';
-import {SingleHotelView} from './components/index';
+import {SingleCarView} from './components';
 import {useDispatch, useSelector} from 'react-redux';
-import {GetHotels} from '../../store/actions/hotel-actions';
+import {GestAllCars} from '../../store/actions/cars-action';
 import {AddToFavourites} from '../../store/actions/favourite-actions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import I18n from '../../i18n';
@@ -21,29 +21,32 @@ function Hotels({navigation}) {
 
   useEffect(() => {
     getUser();
-    dispatch(GetHotels());
+    dispatch(GestAllCars());
   }, []);
-  const {loading} = useSelector(state => state.HotelReducer);
-  const {hotels} = useSelector(state => state.HotelReducer);
+
+  const {loading} = useSelector(state => state.CarReducer);
+  const {cars} = useSelector(state => state.CarReducer);
   const {fav_loading} = useSelector(state => state.FavouriteReducer);
+
   return (
     <View style={styles.main_view}>
       {loading ? (
-        <AnimatedLoader loadingText={I18n.t('loading_hotels')} />
-      ) : hotels?.length > 0 ? (
+        <AnimatedLoader loadingText={I18n.t('loading_cars')} />
+      ) : cars?.length > 0 ? (
         <FlatList
-          data={hotels}
+          data={cars}
           keyExtractor={item => item?.key}
           showsVerticalScrollIndicator={false}
           renderItem={({item, index}) => (
-            <SingleHotelView
-              name={item?.hotelName}
-              location={item?.hotelLocation}
-              price={item?.singlePrice}
-              ratings={item?.hotelRatings}
+            <SingleCarView
+              name={item?.carName}
+              segment={item?.carSegment}
+              location={item?.location}
+              price={item?.hourlyRate}
+              registration={item?.registrationNo}
               image={item?.url}
               onPress={() =>
-                navigation.navigate('ItemDetail', {hotel: item, user: user})
+                navigation.navigate('ItemDetail', {cars: item, user: user})
               }
               loading={fav_loading}
               onPressBookMark={() => {

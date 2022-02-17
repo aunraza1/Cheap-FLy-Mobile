@@ -12,67 +12,107 @@ import {
   faBookmark,
   faMapMarkerAlt,
   faBed,
+  faRegistered,
+  faPersonBooth,
+  faCarSide,
 } from '@fortawesome/free-solid-svg-icons';
 import I18n from '../../i18n';
 import {useDispatch, useSelector} from 'react-redux';
 import {AddToFavourites} from '../../store/actions/favourite-actions';
 
-const HotelDetail = ({route, navigation}) => {
+const ItemDetail = ({route, navigation}) => {
   const dispatch = useDispatch();
   const {fav_loading} = useSelector(state => state.FavouriteReducer);
-  const {hotel, user} = route?.params;
+  const {hotel, user, cars} = route?.params;
+
   let prices = [];
+  let carData = [];
   hotel?.singlePrice &&
     prices.push({
-      price: hotel?.singlePrice,
-      room: I18n.t('single_text'),
+      value: hotel?.singlePrice,
+      key: I18n.t('single_text'),
       color: COLORS.maroon_color,
     });
   hotel?.doublePrice &&
     prices.push({
-      price: hotel?.doublePrice,
-      room: I18n.t('double_text'),
+      value: hotel?.doublePrice,
+      key: I18n.t('double_text'),
       color: COLORS.dark_orange,
     });
   hotel?.kingPrice &&
     prices.push({
-      price: hotel?.kingPrice,
-      room: I18n.t('king_text'),
+      value: hotel?.kingPrice,
+      key: I18n.t('king_text'),
       color: COLORS.green_color,
     });
   hotel?.queenPrice &&
     prices.push({
-      price: hotel?.queenPrice,
-      room: I18n.t('queen_text'),
+      value: hotel?.queenPrice,
+      key: I18n.t('queen_text'),
       color: COLORS.pink_color,
     });
 
+  if (cars) {
+    carData.push({
+      icon: faCarSide,
+      key: I18n.t('segment_text'),
+      value: cars?.carSegment,
+    });
+    carData.push({
+      icon: faPersonBooth,
+      key: I18n.t('owned_by_text'),
+      value: cars?.name,
+    });
+    carData.push({
+      icon: faRegistered,
+      key: I18n.t('registration_no_text'),
+      value: cars?.registrationNo,
+    });
+  }
+  const getType = () => {
+    if (hotel) {
+      return prices;
+    } else {
+      return carData;
+    }
+  };
   return (
     <ScrollView style={styles.main_view}>
-      <Image style={styles.img} source={{uri: hotel.url}} />
+      <Image style={styles.img} source={{uri: hotel ? hotel.url : cars?.url}} />
       <View style={styles.sub_view}>
         <View style={styles.parent_view}>
           <View style={styles.card_view}>
             <View style={styles.card_detail}>
-              <Text text={hotel?.hotelName} />
+              <Text text={hotel ? hotel?.hotelName : cars?.carName} />
               {fav_loading ? (
                 <Loader color={COLORS.maroon_color} size={'small'} />
               ) : (
                 <TouchableOpacity
                   onPress={() =>
-                    dispatch(AddToFavourites(user?.user_id, hotel?.key))
+                    dispatch(
+                      AddToFavourites(
+                        user?.user_id,
+                        hotel ? hotel?.key : cars?.key,
+                      ),
+                    )
                   }>
                   <IconComponent
-                    iconColor={COLORS.maroon_color}
+                    iconColor={
+                      hotel ? COLORS.maroon_color : COLORS.primary_color
+                    }
                     iconName={faBookmark}
                   />
                 </TouchableOpacity>
               )}
             </View>
-            <Ratings ratings={hotel?.hotelRatings} />
+            {hotel && <Ratings ratings={hotel?.hotelRatings} />}
             <Text
               style={[styles.text, {marginTop: SIZES.padding2}]}
-              text={hotel?.singlePrice + I18n.t('pkr_night_text')}
+              text={
+                hotel
+                  ? hotel?.singlePrice + I18n.t('pkr_night_text')
+                  : cars?.hourlyRate + I18n.t('per_hour_text')
+              }
             />
           </View>
         </View>
@@ -89,21 +129,27 @@ const HotelDetail = ({route, navigation}) => {
               />
             </View>
 
-            <Text style={styles.text} text={hotel?.hotelLocation} />
+            <Text
+              style={styles.text}
+              text={hotel ? hotel.hotelLocation : cars?.location}
+            />
           </View>
-          {prices?.map((v, i) => {
+          {getType()?.map((v, i) => {
             return (
               <View key={i} style={styles.card_detail}>
                 <View style={styles.card_detail}>
-                  <IconComponent iconColor={v.color} iconName={faBed} />
+                  <IconComponent
+                    iconColor={v?.color ? v.color : COLORS.primary_color}
+                    iconName={v?.icon ? v.icon : faBed}
+                  />
                   <Text
                     style={[styles.text, {marginLeft: SIZES.padding2}]}
-                    text={v.room}
+                    text={v?.key}
                   />
                 </View>
                 <Text
                   style={styles.text}
-                  text={v.price + ' ' + I18n.t('pkr_text')}
+                  text={cars ? v.value : v?.value + ' ' + I18n.t('pkr_text')}
                 />
               </View>
             );
@@ -113,7 +159,7 @@ const HotelDetail = ({route, navigation}) => {
           onPress={() => navigation.navigate('Booking', hotel)}
           buttonTitle={I18n.t('book_now_text')}
           style={{
-            backgroundColor: COLORS.maroon_color,
+            backgroundColor: cars ? COLORS.primary_color : COLORS.maroon_color,
             borderRadius: SIZES.padding2,
           }}
         />
@@ -121,7 +167,7 @@ const HotelDetail = ({route, navigation}) => {
     </ScrollView>
   );
 };
-export default HotelDetail;
+export default ItemDetail;
 const styles = StyleSheet.create({
   main_view: {
     flex: 1,

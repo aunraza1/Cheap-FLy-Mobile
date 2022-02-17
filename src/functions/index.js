@@ -62,6 +62,18 @@ export const getAllHotels = async sendData => {
       sendData(hotelData);
     });
 };
+export const getAllCars = async sendData => {
+  console.log('Function Chalaaaaa');
+  let carData = [];
+  database()
+    .ref('/Cars')
+    .once('value', snapshot => {
+      snapshot.forEach(child => {
+        carData.push(child.val());
+      });
+      sendData(carData);
+    });
+};
 
 export const addToFavourite = async (
   user_id,
