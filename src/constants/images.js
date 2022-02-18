@@ -5,5 +5,6 @@ import no_data from '../assets/nodata.png';
 import PIA from '../assets/PIA.png'
 import OA from '../assets/OA.png'
 import CS from '../assets/CS.jpg'
-const Images = { login, signup, logo, no_data, PIA, OA, CS };
+import PI from '../assets/PI.jpg'
+const Images = { login, signup, logo, no_data, PIA, OA, CS, PI };
 export default Images;

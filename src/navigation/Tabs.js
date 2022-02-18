@@ -15,6 +15,7 @@ import {
 import Requests from '../screens/Requests';
 import Notifications from '../screens/Notifications';
 import { Favourites } from '../screens/Fovourites/Favourites';
+import { Profile } from '../screens/Profile/Profile';
 const Tab = createBottomTabNavigator();
 import I18n from '../i18n';
 
@@ -129,7 +130,7 @@ function Tabs() {
       />
       <Tab.Screen
         name={I18n.t('profile_text')}
-        component={Hotels}
+        component={Profile}
         options={{
           tabBarIcon: ({ focused }) => (
             <>
