@@ -8,6 +8,10 @@ import { FlightModal } from '../screens/Flights/FlightModal/FlightModal';
 import ItemDetail from '../screens/ItemDetail';
 import Cars from '../screens/Cars';
 import { Favourites } from '../screens/Fovourites/Favourites';
+import Requests from '../screens/Requests';
+import { More } from '../screens/More/More';
+import { Discounts } from '../screens/Discounts/Discounts';
+import { Tours } from '../screens/Tours/Tours';
 const Stack = createNativeStackNavigator();
 function HomeStack() {
   return (
@@ -23,6 +27,10 @@ function HomeStack() {
       <Stack.Screen name="ItemDetail" component={ItemDetail} />
       <Stack.Screen name="Booking" component={Booking} />
       <Stack.Screen name="Saved" component={Favourites} />
+      <Stack.Screen name="Requests" component={Requests} />
+      <Stack.Screen name="Tours" component={Tours} />
+      <Stack.Screen name="Discounts" component={Discounts} />
+      <Stack.Screen name="More" component={More} />
     </Stack.Navigator>
   );
 }

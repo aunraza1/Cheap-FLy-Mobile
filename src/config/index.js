@@ -32,6 +32,7 @@ export const dashboardData = [
     id: 4,
     icon: faPaperPlane,
     text: 'Requests',
+    route: 'Requests',
   },
   {
     id: 5,
@@ -43,16 +44,19 @@ export const dashboardData = [
     id: 6,
     icon: faHiking,
     text: 'Tours',
+    route: 'Tours',
   },
   {
     id: 7,
     icon: faMoneyBill,
     text: 'Discounts',
+    route: 'Discounts',
   },
   {
     id: 8,
     icon: faEllipsisH,
     text: 'More',
+    route: 'More',
   },
 ];
 

@@ -1,11 +1,11 @@
 import React from 'react';
-import {View, StyleSheet, Image} from 'react-native';
-import {images} from '../constants';
+import { View, StyleSheet, Image } from 'react-native';
+import { images } from '../constants';
 
 const NoDataFound = () => {
   return (
     <View style={styles.main_view}>
-      <Image resizeMode="contain" style={styles.img} source={images.no_data} />
+      <Image resizeMode="contain" style={styles.img} source={images.CS} />
     </View>
   );
 };
@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'white'
   },
   img: {
     width: '100%',

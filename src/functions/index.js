@@ -92,7 +92,6 @@ export const getAllFavourites = async (sendData) => {
   })
   const items = await AsyncStorage.getItem('user');
   let obj = JSON.parse(items);
-  console.log(obj)
   await database()
     .ref('/Favourite')
     .once('value', snapshot => {
@@ -284,3 +283,24 @@ export const checkFlight = (flightVal, setLoader, setData) => {
       console.log(err);
     });
 };
+
+export const approveduserBookings = async (sendData) => {
+  const items = await AsyncStorage.getItem('user');
+  let obj = JSON.parse(items);
+  let approvedBookings = [];
+  let unApproveBooking = [];
+  await database().ref('/Bookings/').orderByChild('bookingStatus').equalTo(false + obj?.user_id).once('value', (snapshot) => {
+    snapshot.forEach((child) => {
+      unApproveBooking.push(child.val())
+    })
+
+  })
+  await database().ref('/Bookings/').orderByChild('bookingStatus').equalTo(true + obj?.user_id).once('value', (snapshot) => {
+    snapshot.forEach((child) => {
+      approvedBookings.push(child.val())
+    })
+
+  })
+  sendData(approvedBookings, unApproveBooking)
+
+}
