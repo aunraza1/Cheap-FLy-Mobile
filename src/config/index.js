@@ -37,6 +37,7 @@ export const dashboardData = [
     id: 5,
     icon: faHeart,
     text: 'Saved',
+    route: 'Saved',
   },
   {
     id: 6,

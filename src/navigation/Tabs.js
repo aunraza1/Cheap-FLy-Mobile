@@ -1,11 +1,11 @@
 import React from 'react';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeStack from './HomeStack';
 import Hotels from '../screens/Hotels';
-import {COLORS, images, SIZES} from '../constants';
-import {StyleSheet, View, Image} from 'react-native';
-import {IconComponent} from '../components';
-import {faHome} from '@fortawesome/free-solid-svg-icons';
+import { COLORS, images, SIZES } from '../constants';
+import { StyleSheet, View, Image } from 'react-native';
+import { IconComponent } from '../components';
+import { faHome } from '@fortawesome/free-solid-svg-icons';
 import {
   faHeart,
   faBell,
@@ -14,6 +14,7 @@ import {
 } from '@fortawesome/free-regular-svg-icons';
 import Requests from '../screens/Requests';
 import Notifications from '../screens/Notifications';
+import { Favourites } from '../screens/Fovourites/Favourites';
 const Tab = createBottomTabNavigator();
 import I18n from '../i18n';
 
@@ -22,12 +23,12 @@ function Tabs() {
   return (
     <Tab.Navigator
       screenOptions={{
-        headerStyle: {backgroundColor: COLORS.primary_color},
+        headerStyle: { backgroundColor: COLORS.primary_color },
         headerTitleAlign: 'center',
         headerTintColor: COLORS.white_color,
         headerTitle: () => (
           <Image
-            style={{height: SIZES.padding2 * 4, width: SIZES.padding2 * 4}}
+            style={{ height: SIZES.padding2 * 4, width: SIZES.padding2 * 4 }}
             source={images.logo}
           />
         ),
@@ -35,13 +36,13 @@ function Tabs() {
         tabBarInactiveTintColor: COLORS.white_color,
         tabBarStyle: styles.tab_bar,
         tabBarHideOnKeyboard: true,
-        tabBarLabelStyle: {marginBottom: SIZES.padding},
+        tabBarLabelStyle: { marginBottom: SIZES.padding },
       }}>
       <Tab.Screen
         name={I18n.t('home_text')}
         component={HomeStack}
         options={{
-          tabBarIcon: ({focused}) => (
+          tabBarIcon: ({ focused }) => (
             <>
               {focused ? (
                 <IconComponent
@@ -63,7 +64,7 @@ function Tabs() {
         name={I18n.t('request_text')}
         component={Requests}
         options={{
-          tabBarIcon: ({focused}) => (
+          tabBarIcon: ({ focused }) => (
             <>
               {focused ? (
                 <IconComponent
@@ -83,9 +84,9 @@ function Tabs() {
       />
       <Tab.Screen
         name={I18n.t('favourite_text')}
-        component={Hotels}
+        component={Favourites}
         options={{
-          tabBarIcon: ({focused}) => (
+          tabBarIcon: ({ focused }) => (
             <View style={styles.middle_icon}>
               {focused ? (
                 <IconComponent
@@ -108,7 +109,7 @@ function Tabs() {
         name={I18n.t('notification_text')}
         component={Notifications}
         options={{
-          tabBarIcon: ({focused}) => (
+          tabBarIcon: ({ focused }) => (
             <>
               {focused ? (
                 <IconComponent
@@ -130,7 +131,7 @@ function Tabs() {
         name={I18n.t('profile_text')}
         component={Hotels}
         options={{
-          tabBarIcon: ({focused}) => (
+          tabBarIcon: ({ focused }) => (
             <>
               {focused ? (
                 <IconComponent
