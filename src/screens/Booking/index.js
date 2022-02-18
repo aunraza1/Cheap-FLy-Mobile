@@ -17,6 +17,7 @@ const Booking = ({route, navigation}) => {
 
   const [user, setUser] = useState(null);
   const [days, setDays] = useState(null);
+  const [rate, setRate] = useState(null);
   const [amount, setAmount] = useState(null);
   const [selectedType, setSelectedType] = useState(null);
   const [date, setDate] = useState(new Date());
@@ -36,30 +37,35 @@ const Booking = ({route, navigation}) => {
   };
 
   const BookHotel = () => {
-    if (selectedType?.value !== null && days) {
-      const api_data = {
-        amountPayable: parseInt(amount),
-        bookingStatus: false + user?.user_id,
-        cancelBooking: false,
-        checkInDate: moment(date).format('YYYY-MM-DD'),
-        days: parseInt(days),
-        hotelLocation: data?.hotelLocation,
-        hotelName: data?.hotelName,
-        hotelRatings: data?.hotelRatings,
-        roomType: selectedType?.label,
-        userId: user?.user_id,
-        ownerId: data?.ownerId,
-        owenrName: data?.ownerName,
-        price: selectedType?.value,
-      };
-      dispatch(Book(api_data, navigation));
+    if (data?.hotelName) {
+      if (selectedType?.value !== null && days) {
+        const api_data = {
+          amountPayable: parseInt(amount),
+          bookingStatus: false + user?.user_id,
+          cancelBooking: false,
+          checkInDate: moment(date).format('YYYY-MM-DD'),
+          days: parseInt(days),
+          hotelLocation: data?.hotelLocation,
+          hotelName: data?.hotelName,
+          hotelRatings: data?.hotelRatings,
+          roomType: selectedType?.label,
+          userId: user?.user_id,
+          ownerId: data?.ownerId,
+          owenrName: data?.ownerName,
+          price: selectedType?.value,
+        };
+        dispatch(Book(api_data, navigation));
+      } else {
+        dispatch(
+          ModalHandler({
+            show: true,
+            message: I18n.t('select_room_and_days_alert'),
+          }),
+        );
+      }
     } else {
-      dispatch(
-        ModalHandler({
-          show: true,
-          message: I18n.t('select_room_and_days_alert'),
-        }),
-      );
+      const api_data = {};
+      dispatch(Book(api_data, navigation));
     }
   };
   useEffect(() => {
@@ -75,7 +81,7 @@ const Booking = ({route, navigation}) => {
     options.push({label: I18n.t('king_text'), value: data?.kingPrice});
   data?.queenPrice &&
     options.push({label: I18n.t('queen_text'), value: data?.queenPrice});
-
+  console.log(data);
   return (
     <ScrollView style={styles.main_view}>
       <View style={styles.sub_view}>
@@ -87,16 +93,20 @@ const Booking = ({route, navigation}) => {
         <InputField
           style={styles.input}
           editable={false}
-          value={data?.hotelName}
+          value={data?.hotelName ? data?.hotelName : data?.carName}
         />
         <Text
           style={styles.text}
-          text={data?.hotelRatings ? I18n.t('hotel_ratings') : 'Car Name'}
+          text={data?.hotelRatings ? I18n.t('hotel_ratings') : 'Car Segment'}
         />
         <InputField
           style={styles.input}
           editable={false}
-          value={data?.hotelRatings + ' ' + I18n.t('star_text')}
+          value={
+            data?.hotelRatings
+              ? data?.hotelRatings + ' ' + I18n.t('star_text')
+              : data?.carSegment
+          }
         />
         <Text style={styles.text} text={I18n.t('user_name')} />
         <InputField
@@ -104,34 +114,59 @@ const Booking = ({route, navigation}) => {
           editable={false}
           value={user?.user_name}
         />
-        <Text style={styles.text} text={I18n.t('room_text')} />
-        <DropDowwn
-          onSelectValue={value => setSelectedType(value)}
-          style={{marginTop: SIZES.padding2}}
-          type={I18n.t('room_type')}
-          options={options}
+        {data?.hotelName && (
+          <>
+            <Text style={styles.text} text={I18n.t('room_text')} />
+            <DropDowwn
+              onSelectValue={value => setSelectedType(value)}
+              style={{marginTop: SIZES.padding2}}
+              type={I18n.t('room_type')}
+              options={options}
+            />
+          </>
+        )}
+        <Text
+          style={styles.text}
+          text={data?.hotelName ? I18n.t('price_text') : 'Hourly Rate'}
         />
-        <Text style={styles.text} text={I18n.t('price_text')} />
         <InputField
-          placeholder={I18n.t('price_text')}
-          value={selectedType ? selectedType.value : null}
+          placeholder={data?.hotelName ? I18n.t('price_text') : 'Hourly Rate'}
+          value={
+            data?.hotelName
+              ? selectedType
+                ? selectedType.value
+                : null
+              : data?.hourlyRate
+          }
           style={styles.input}
           editable={false}
         />
-        <Text style={styles.text} text={I18n.t('stay_days')} />
+        <Text
+          style={styles.text}
+          text={data?.hotelName ? I18n.t('stay_days') : 'Duration (Hours)'}
+        />
         <InputField
           keyboardType="numeric"
-          placeholder={I18n.t('stay_days')}
+          placeholder={
+            data?.hotelName ? I18n.t('stay_days') : 'Duration (Hours)'
+          }
           onChangeText={text => {
-            selectedType?.value && setDays(text);
-            let value = parseInt(text) * parseInt(selectedType?.value);
-            setAmount(value);
+            if (data?.hotelName) {
+              selectedType?.value && setDays(text);
+              let value = parseInt(text) * parseInt(selectedType?.value);
+              setAmount(value);
+            } else {
+              data?.hourlyRate && setRate(text);
+              let value = parseInt(text) * parseInt(data?.hourlyRate);
+              setAmount(value);
+            }
           }}
           style={styles.input}
           value={days ? days : null}
         />
         <Text style={styles.text} text={I18n.t('amount_text')} />
-        <InputField
+        <Inp
+          utField
           placeholder={I18n.t('amount_text')}
           value={amount ? amount.toString() : null}
           style={styles.input}
@@ -162,7 +197,7 @@ const Booking = ({route, navigation}) => {
         ) : (
           <Button
             onPress={() => BookHotel()}
-            buttonTitle={I18n.t('book_hotel')}
+            buttonTitle={data?.hotel ? I18n.t('book_hotel') : 'Book Car'}
           />
         )}
       </View>
