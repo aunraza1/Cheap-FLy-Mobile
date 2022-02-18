@@ -24,7 +24,6 @@ const Requests = () => {
       setAccepted(false);
     }
   };
-
   const getApproved = async () => {
     setLoading(true)
     await approveduserBookings((approve, unApprove) => {

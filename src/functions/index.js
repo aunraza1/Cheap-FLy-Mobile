@@ -302,5 +302,53 @@ export const approveduserBookings = async (sendData) => {
 
   })
   sendData(approvedBookings, unApproveBooking)
+}
+export const userSignup = (name, email, password, sendResponce) => {
+  auth().createUserWithEmailAndPassword(name, email, password)
+    .then(() => {
+      var user = firebase.auth().currentUser
+      var key = firebase.database().ref('/Users').push().key
+      let obj = {
+        uid: user.uid,
+        key: key,
+        name: name,
+        email: email,
+        password: password,
+      }
+      database().ref('Users/' + key).set(obj).then(() => {
 
+        sendResponce({
+          message: "Account Added! Verify yout email",
+          type: "success"
+        })
+      })
+      user.sendEmailVerification().then(() => {
+        sendResponce({
+          message: "Verification Email sent!"
+        })
+        auth().signOut()
+      }).catch(() => {
+        sendResponce({
+          message: 'Email send Failed',
+          type: "success"
+        })
+      })
+    })
+    .catch(error => {
+      if (error.code === 'auth/email-already-in-use') {
+        sendResponce({
+          message: "That email address is already in use!"
+        })
+      }
+      else if (error.code === 'auth/invalid-email') {
+        sendResponce({
+          message: "That email address is invalid!"
+        })
+      }
+      else if (error.code === 'auth/weak-password') {
+        sendResponce({
+          message: "Password must be of atlleast 6 char"
+        })
+      }
+    });
 }

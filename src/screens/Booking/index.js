@@ -1,19 +1,20 @@
-import React, {useState, useEffect} from 'react';
-import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
-import {Button, DropDowwn, InputField, Loader, Text} from '../../components';
-import {COLORS, FONTS, SIZES} from '../../constants';
+import React, { useState, useEffect } from 'react';
+import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Button, DropDowwn, InputField, Loader, Text } from '../../components';
+import { COLORS, FONTS, SIZES } from '../../constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import I18n from '../../i18n';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
-import {useDispatch, useSelector} from 'react-redux';
-import {ModalHandler} from '../../store/actions/modal-actions';
-import {Book} from '../../store/actions/booking-actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { ModalHandler } from '../../store/actions/modal-actions';
+import { Book } from '../../store/actions/booking-actions';
 
-const Booking = ({route, navigation}) => {
+const Booking = ({ route, navigation }) => {
   const data = route?.params;
   const dispatch = useDispatch();
-  const {loading} = useSelector(state => state.BookingReducer);
+  const { loading } = useSelector(state => state.BookingReducer);
+
 
   const [user, setUser] = useState(null);
   const [days, setDays] = useState(null);
@@ -22,6 +23,7 @@ const Booking = ({route, navigation}) => {
   const [selectedType, setSelectedType] = useState(null);
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
+
 
   const getUser = async () => {
     let e = await AsyncStorage.getItem('user');
@@ -63,9 +65,35 @@ const Booking = ({route, navigation}) => {
           }),
         );
       }
-    } else {
-      const api_data = {};
-      dispatch(Book(api_data, navigation));
+    }
+    else {
+      if (days) {
+        const api_data = {
+          amountPayable: parseInt(amount),
+          bookingStatus: false + user?.user_id,
+          cancelBooking: false,
+          carName: data?.carName,
+          carSegment: data?.carSegment,
+          companyName: data?.carName,
+          contactNo: '123123123',
+          date: moment(date).format('YYYY-MM-DD'),
+          duration: parseInt(days),
+          hourlyRate: parseInt(data?.hourlyRate),
+          userId: user?.user_id,
+          userName: user?.user_name,
+          vendorRequestStatus: false + data?.ownerId,
+          registrationNo: data?.registrationNo,
+          location: data?.location
+
+        };
+        dispatch(Book(api_data, navigation));
+      }
+      else {
+        dispatch(ModalHandler({
+          show: true,
+          message: "Please Select Duration "
+        }))
+      }
     }
   };
   useEffect(() => {
@@ -74,13 +102,13 @@ const Booking = ({route, navigation}) => {
 
   let options = [];
   data?.singlePrice &&
-    options.push({label: I18n.t('single_text'), value: data?.singlePrice});
+    options.push({ label: I18n.t('single_text'), value: data?.singlePrice });
   data?.doublePrice &&
-    options.push({label: I18n.t('double_text'), value: data?.doublePrice});
+    options.push({ label: I18n.t('double_text'), value: data?.doublePrice });
   data?.kingPrice &&
-    options.push({label: I18n.t('king_text'), value: data?.kingPrice});
+    options.push({ label: I18n.t('king_text'), value: data?.kingPrice });
   data?.queenPrice &&
-    options.push({label: I18n.t('queen_text'), value: data?.queenPrice});
+    options.push({ label: I18n.t('queen_text'), value: data?.queenPrice });
   console.log(data);
   return (
     <ScrollView style={styles.main_view}>
@@ -119,7 +147,7 @@ const Booking = ({route, navigation}) => {
             <Text style={styles.text} text={I18n.t('room_text')} />
             <DropDowwn
               onSelectValue={value => setSelectedType(value)}
-              style={{marginTop: SIZES.padding2}}
+              style={{ marginTop: SIZES.padding2 }}
               type={I18n.t('room_type')}
               options={options}
             />
@@ -156,6 +184,7 @@ const Booking = ({route, navigation}) => {
               let value = parseInt(text) * parseInt(selectedType?.value);
               setAmount(value);
             } else {
+              setDays(text)
               data?.hourlyRate && setRate(text);
               let value = parseInt(text) * parseInt(data?.hourlyRate);
               setAmount(value);
@@ -165,8 +194,7 @@ const Booking = ({route, navigation}) => {
           value={days ? days : null}
         />
         <Text style={styles.text} text={I18n.t('amount_text')} />
-        <Inp
-          utField
+        <InputField
           placeholder={I18n.t('amount_text')}
           value={amount ? amount.toString() : null}
           style={styles.input}
@@ -201,7 +229,7 @@ const Booking = ({route, navigation}) => {
           />
         )}
       </View>
-      <View style={{height: SIZES.padding * 2}} />
+      <View style={{ height: SIZES.padding * 2 }} />
     </ScrollView>
   );
 };

@@ -20,6 +20,21 @@ export default (state = INITAL_STATE, action) => {
         ...state,
         loading: false,
       };
+    case 'SIGNUP_PROGRESS':
+      return {
+        ...state,
+        loading: true,
+      };
+    case 'SIGNUP_SUCCESS':
+      return {
+        ...state,
+        loading: false,
+      };
+    case 'SIGNUP_ERROR':
+      return {
+        ...state,
+        loading: false,
+      };
     default:
       return state;
   }
