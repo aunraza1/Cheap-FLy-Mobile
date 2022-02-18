@@ -304,3 +304,17 @@ export const approveduserBookings = async (sendData) => {
   sendData(approvedBookings, unApproveBooking)
 
 }
+
+export const getUserDetails = async (sendData) => {
+  const items = await AsyncStorage.getItem('user');
+  let obj = JSON.parse(items);
+  database()
+    .ref('/Users')
+    .orderByChild('key')
+    .equalTo(obj?.user_id)
+    .once('value', snapshot => {
+      snapshot.forEach(child => {
+        sendData(child.val())
+      })
+    })
+}
