@@ -156,7 +156,7 @@ const ItemDetail = ({route, navigation}) => {
           })}
         </View>
         <Button
-          onPress={() => navigation.navigate('Booking', hotel)}
+          onPress={() => navigation.navigate('Booking', hotel ? hotel : cars)}
           buttonTitle={I18n.t('book_now_text')}
           style={{
             backgroundColor: cars ? COLORS.primary_color : COLORS.maroon_color,
