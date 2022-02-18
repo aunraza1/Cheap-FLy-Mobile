@@ -1,6 +1,7 @@
-import database, {firebase} from '@react-native-firebase/database';
+import database, { firebase } from '@react-native-firebase/database';
 import auth from '@react-native-firebase/auth';
-
+import axios from 'axios';
+import moment from 'moment';
 export const signin = async (email, password, data) => {
   auth()
     .signInWithEmailAndPassword(email, password)
@@ -70,8 +71,6 @@ export const getAllCars = async sendData => {
       snapshot.forEach(child => {
         carData.push(child.val());
       });
-
-      console.log('THEEEEEEEEEEEEEEEEEEEEEEEEE', carData);
       sendData(carData);
     });
 };
@@ -131,7 +130,7 @@ export const addBooking = (obj, sendResponce) => {
   firebase
     .database()
     .ref('/Bookings/' + key)
-    .set({...obj, key: key}, err => {
+    .set({ ...obj, key: key }, err => {
       if (err) {
         sendResponce({
           message: 'Something Went Wrong!',
@@ -141,5 +140,102 @@ export const addBooking = (obj, sendResponce) => {
           message: 'Booking Added ,wait for booking confirmation',
         });
       }
+    });
+};
+
+export const fetchCity = (text, setState, setData) => {
+  axios({
+    method: "get",
+    url: `https://autocomplete.travelpayouts.com/places2?term=${text}&locale=en&types[]=city`,
+  })
+    .then((res) => {
+      let value = res?.data?.map((item) => ({
+        id: item?.code,
+        title: item?.name,
+      }))
+      setState([...value])
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+
+export const checkFlight = (flightVal, setLoader, setData) => {
+  //YYYY-MM-DD
+  let dt = moment(
+    flightVal?.departureDate
+  ).format("YYYY-MM-DD");
+  let dtf = moment(
+    flightVal?.departureDate
+  ).format("MMMM Do YYYY");
+  setLoader(true)
+  axios.post('https://cheapfly.azurewebsites.net/api/amadeus?code=cxVrg4u3qRfMDPr8lTrr1drxtwDhzt59geI98e0akgictMa8HkkvJw==', {
+    origin: flightVal?.origin,
+    destination: flightVal?.destination,
+    departureDate: dt,
+    adult: flightVal?.adult,
+    child: flightVal?.child,
+    travelClass: flightVal?.class,
+  })
+    .then((res) => {
+      console.log(res)
+      let json = [];
+      if (res?.data?.data?.length > 0) {
+        res?.data?.data &&
+          res?.data?.data.map((Val, i) => {
+            let departDate = moment(
+              res?.data?.data[i]?.itineraries[0]?.segments[0]?.departure?.at
+            ).format("h:mm a");
+            let arrivalDate = moment(
+              res?.data?.data[i]?.itineraries[0]?.segments[0]?.arrival?.at
+            ).format("h:mm a");
+            let total = res?.data?.data[i]?.price?.base;
+            let airLine = "";
+            let airlineCode =
+              res?.data?.data[i]?.itineraries[0]?.segments[0]?.carrierCode;
+            for (const [key, value] of Object.entries(
+              res?.data?.result?.dictionaries?.carriers
+            )) {
+              if (key === airlineCode) {
+                airLine = value;
+              }
+            }
+            let word = res?.data?.data[i]?.itineraries[0]?.duration;
+            let duration = "";
+            let interval;
+            let hour = "";
+            let minute = "";
+            for (let i = 0; i <= word.length - 1; i++) {
+              if (word.charAt(i) === "H") {
+                hour = word.slice(2, i + 1);
+                interval = i + 1;
+              }
+              if (word.charAt(i) === "M") {
+                minute = word.slice(interval, i + 1);
+              }
+              duration = hour + " " + minute;
+            }
+            json.push({
+              id: i,
+              flyingFrom: flightVal?.origin,
+              flyingTo: flightVal?.destination,
+              adults: flightVal?.adult,
+              child: flightVal?.child,
+              class: flightVal?.class,
+              departDate: departDate,
+              arrivalDate: arrivalDate,
+              date: dtf,
+              total: total,
+              airLine: airLine,
+              duration: duration,
+            });
+          });
+        setData(json)
+        setLoader(false)
+      }
+    })
+    .catch((err) => {
+      console.log(err);
     });
 };

@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
-import {TextInput, StyleSheet, View, TouchableOpacity} from 'react-native';
-import {COLORS, FONTS, SIZES} from '../constants';
-import {IconComponent} from './index';
-import {faEye, faEyeSlash} from '@fortawesome/free-solid-svg-icons';
+import React, { useState } from 'react';
+import { TextInput, StyleSheet, View, TouchableOpacity } from 'react-native';
+import { COLORS, FONTS, SIZES } from '../constants';
+import { IconComponent } from './index';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 const InputContainer = ({
   onChangeText,
   value,
@@ -26,7 +26,7 @@ const InputContainer = ({
       style={[
         styles.main_view,
         style,
-        borderBottom && {borderBottomWidth: 1, borderWidth: 0, borderRadius: 0},
+        borderBottom && { borderBottomWidth: 1, borderWidth: 0, borderRadius: 0 },
       ]}>
       {iconName && (
         <IconComponent
@@ -42,7 +42,7 @@ const InputContainer = ({
           placeholderTextColor ? placeholderTextColor : COLORS.black_color
         }
         value={value}
-        style={[styles.input, iconName && {marginLeft: SIZES.padding2}]}
+        style={[styles.input, iconName && { marginLeft: SIZES.padding2 }]}
         keyboardType={keyboardType}
         onFocus={onFocus}
         onBlur={onBlur}
