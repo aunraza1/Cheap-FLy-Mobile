@@ -2,6 +2,7 @@ import database, { firebase } from '@react-native-firebase/database';
 import auth from '@react-native-firebase/auth';
 import axios from 'axios';
 import moment from 'moment';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export const signin = async (email, password, data) => {
   auth()
     .signInWithEmailAndPassword(email, password)
@@ -53,7 +54,7 @@ export const signin = async (email, password, data) => {
 };
 export const getAllHotels = async sendData => {
   let hotelData = [];
-  database()
+  await database()
     .ref('/Hotels')
     .once('value', snapshot => {
       snapshot.forEach(child => {
@@ -62,16 +63,60 @@ export const getAllHotels = async sendData => {
       sendData(hotelData);
     });
 };
-export const getAllCars = async sendData => {
-  console.log('Function Chalaaaaa');
+export const getAllCars = async (sendData) => {
   let carData = [];
-  database()
+  await database()
     .ref('/Cars')
     .once('value', snapshot => {
       snapshot.forEach(child => {
         carData.push(child.val());
       });
       sendData(carData);
+    });
+};
+
+
+
+
+export const getAllFavourites = async (sendData) => {
+  let oFavourites = [];
+  let carData = [];
+  let hotelData = [];
+  let hData = [];
+  let cData = [];
+  await getAllCars((data) => {
+    carData = data
+  })
+  await getAllHotels((data) => {
+    hotelData = data
+  })
+  const items = await AsyncStorage.getItem('user');
+  let obj = JSON.parse(items);
+  console.log(obj)
+  await database()
+    .ref('/Favourite')
+    .once('value', snapshot => {
+      snapshot.forEach(async (child) => {
+        oFavourites.push(child.val());
+      });
+      oFavourites?.map(async (item, i) => {
+        if (item?.userId === obj?.user_id) {
+          const carResult = carData.filter((caritem) => {
+            if (caritem?.key === item?.favItemId) {
+              cData.push(caritem)
+            }
+          })
+          const hotelResult = hotelData.filter((hotelItem) => {
+            if (hotelItem?.key === item?.favItemId) {
+              hData.push(hotelItem)
+            }
+          })
+
+
+        }
+      })
+      const arrayMerge = cData.concat(hData)
+      sendData(arrayMerge);
     });
 };
 
